@@ -1,15 +1,15 @@
+## CASTES AND TRIBES OF SOUTH INDIA (EDGAR THURSTON AND K RANGACHARI)
+
+# importing required libraries
 import sys
 sys.path.insert(0, '/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages')
 import requests as r
-import bs4
 from bs4 import BeautifulSoup as soup
 import pandas as pd
 import re
 import nltk
 import spacy
-import en_core_web_sm
 import pickle
-import numpy as np
 
 # function to download data from the html file
 def create_corpus(url):
@@ -115,7 +115,6 @@ df = pd.DataFrame(list(zip(castes_names, castes_descriptions)),
                   columns = column_names)
 df['doc_id'] = df.index
 # print(df)
-
 
 # EDA
 nltk.download('punkt')
@@ -263,3 +262,35 @@ text_file = open("nlp_castes_descriptions.html", "w")
 text_file.write(html)
 text_file.close()
 # print(nlp_df)
+
+## SAMUEL MATEER
+
+# importing the necessary libraries
+
+# function to clean a text file of line breaks, page numbers, and chapter names
+def clean_txt_file(input_file, output_file):
+    with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
+        for line in infile:
+            # Remove line breaks and whitespaces from the beginning and end of the line
+            cleaned_line = line.strip()
+            
+            # Check if the cleaned line contains only numbers (page numbers)
+            if cleaned_line.isdigit():
+                continue
+            
+            # Check if the cleaned line contains all content in capital letters (chapter names)
+            if cleaned_line.isupper():
+                continue
+            
+            # If the cleaned line doesn't meet the criteria, write it to the output file
+            outfile.write(cleaned_line + ' ')
+
+# The Gospel in South India:
+input_file_path = './data/the_gospel_in_south_india.txt'
+output_file_path = './data/cleaned_the_gospel_in_south_india.txt'
+clean_txt_file(input_file_path, output_file_path)
+
+# The Land of Charity
+input_file_path = './data/the_land_of_charity.txt'
+output_file_path = './data/cleaned_the_land_of_charity.txt'
+clean_txt_file(input_file_path, output_file_path)
