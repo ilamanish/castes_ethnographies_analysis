@@ -273,6 +273,7 @@ def clean_txt_file(input_file, output_file):
         for line in infile:
             # Remove line breaks and whitespaces from the beginning and end of the line
             cleaned_line = line.strip()
+            cleaned_line = re.sub('\[[^\]]*\]', '', cleaned_line)
             
             # Check if the cleaned line contains only numbers (page numbers)
             if cleaned_line.isdigit():
